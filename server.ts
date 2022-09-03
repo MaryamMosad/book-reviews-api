@@ -6,18 +6,25 @@ import { buildSchema } from 'type-graphql';
 import { UserResolver } from "./src/user/user.resolver";
 import { logger } from "./src/common/logger/logger";
 import { AuthResolver } from "./src/auth/auth.resolver";
+import { authChecker, getUserFromRequestHeaders } from "./src/auth/auth-middleware";
 
 
 const port = process.env.PORT || 1998
 
 export async function startApolloServer() {
     const schema = await buildSchema({
-        resolvers: [UserResolver, AuthResolver]
+        resolvers: [UserResolver, AuthResolver],
+        authChecker: authChecker
     })
     const server = new ApolloServer({
         schema, introspection: true, plugins: [
             ApolloServerPluginLandingPageGraphQLPlayground(),
-        ],
+        ], context: async ({ req }) => {
+            const currentUser = await getUserFromRequestHeaders(req);
+            return {
+                currentUser
+            }
+        }
     })
     await server.start()
     const app = express();

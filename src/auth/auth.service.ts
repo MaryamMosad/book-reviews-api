@@ -3,12 +3,16 @@ import * as bcrypt from 'bcrypt'
 import { BaseException } from "../common/exceptions/errors";
 import { User } from "../user/user.model";
 import { SignInInput } from "./Inputs/sign-in.input";
-import { sign } from "jsonwebtoken"
+import { sign, verify } from "jsonwebtoken"
+import { UserService } from "../user/user.service";
 
 export class AuthService {
+    constructor(private readonly userService?: UserService) {
+        this.userService=new UserService()
+     }
     async signUp(input: SignUpInput) {
         try {
-            await this.checkIfUserExists(input.email);
+            await this.userService.checkIfUserExists(input.email);
             const password = await bcrypt.hash(input.password, 12)
             const user = await User.create({ ...input, password })
             this.generateToken(user)
@@ -26,13 +30,16 @@ export class AuthService {
         this.generateToken(user)
         return user;
     }
-    private async checkIfUserExists(email: string) {
-        const user = await User.findOne({ where: { email } })
-        if (user) throw new BaseException(601)
-    }
+
     private generateToken(user: User) {
-        const token = sign({ id: user.id }, process.env.JWT_SECRET)
+        const token = sign({ userId: user.id }, process.env.JWT_SECRET)
         user.token = token
+    }
+    async validateCurrentUser(token: string) {
+        const payload = await verify(token, process.env.JWT_SECRET);
+        try { return await this.userService.getUser(payload['userId']) } catch {
+            return null
+        }
     }
 }
 
