@@ -5,9 +5,7 @@ import { AuthService } from "./auth.service";
 import { SignInInput } from "./Inputs/sign-in.input";
 @Resolver(User)
 export class AuthResolver {
-    constructor(private readonly authService: AuthService) {
-        this.authService = new AuthService()
-    }
+    constructor(private readonly authService: AuthService = new AuthService()) { }
     @Mutation(returns => User)
     async signUp(@Args() input: SignUpInput) {
         return await this.authService.signUp(input)

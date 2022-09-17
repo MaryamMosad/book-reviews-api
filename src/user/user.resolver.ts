@@ -7,9 +7,7 @@ import { UserService } from "./user.service";
 
 @Resolver(User)
 export class UserResolver {
-    constructor(private readonly userService: UserService) {
-        this.userService = new UserService()
-    }
+    constructor(private readonly userService: UserService = new UserService()) { }
     @Query(returns => [User])
     async users() {
         return await this.userService.users();

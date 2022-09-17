@@ -1,7 +1,6 @@
 import {
   AllowNull,
   Column,
-  CreatedAt,
   DataType,
   Default,
   Model,
@@ -13,7 +12,7 @@ import { Field, ID, ObjectType } from "type-graphql";
 
 @Table({ timestamps: true })
 @ObjectType()
-export class User extends Model {
+export class Genre extends Model<Genre> {
   @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column({ type: DataType.UUID })
@@ -24,25 +23,11 @@ export class User extends Model {
   @AllowNull(false)
   @Column
   @Field()
-  username: string;
+  name: string;
 
   @AllowNull(false)
+  @Default(true)
   @Column
   @Field()
-  email: string;
-
-  @Column
-  @Field()
-  avatar: string;
-
-  @Field({ nullable: true })
-  token: string;
-
-  @AllowNull(true)
-  @Column
-  password: string;
-
-  @CreatedAt
-  @Column({ type: DataType.DATE })
-  createdAt: Date;
+  isActive: boolean;
 }

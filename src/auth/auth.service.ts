@@ -7,9 +7,7 @@ import { sign, verify } from "jsonwebtoken"
 import { UserService } from "../user/user.service";
 
 export class AuthService {
-    constructor(private readonly userService?: UserService) {
-        this.userService=new UserService()
-     }
+    constructor(private readonly userService: UserService = new UserService()) { }
     async signUp(input: SignUpInput) {
         try {
             await this.userService.checkIfUserExists(input.email);
