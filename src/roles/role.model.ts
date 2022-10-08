@@ -1,6 +1,5 @@
 import {
   AllowNull,
-  BelongsToMany,
   Column,
   DataType,
   Default,
@@ -10,12 +9,10 @@ import {
   Unique,
 } from "sequelize-typescript";
 import { Field, ID, ObjectType } from "type-graphql";
-import { BookGenre } from "../books/models/book-genre.model";
-import { Book } from "../books/models/book.model";
 
 @Table({ timestamps: true })
 @ObjectType()
-export class Genre extends Model<Genre> {
+export class Role extends Model<Role> {
   @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column({ type: DataType.UUID })
@@ -29,11 +26,7 @@ export class Genre extends Model<Genre> {
   name: string;
 
   @AllowNull(false)
-  @Default(true)
-  @Column
-  @Field()
-  isActive: boolean;
-
-  @BelongsToMany(() => Book, () => BookGenre)
-  books: Book[];
+  @Column({ type: DataType.ARRAY(DataType.STRING) })
+  @Field(() => [String])
+  permissions: string[];
 }

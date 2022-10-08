@@ -11,12 +11,13 @@ import {
   Table,
   Unique,
 } from "sequelize-typescript";
-import { Field, ID, ObjectType } from "type-graphql";
-import { Role } from "../roles/role.model";
+import { Field, ID, Int, ObjectType } from "type-graphql";
+import { Book } from "../books/models/book.model";
+import { User } from "../user/user.model";
 
 @Table({ timestamps: true })
 @ObjectType()
-export class User extends Model<User> {
+export class Review extends Model<Review> {
   @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column({ type: DataType.UUID })
@@ -27,31 +28,28 @@ export class User extends Model<User> {
   @AllowNull(false)
   @Column
   @Field()
-  username: string;
-
-  @AllowNull(false)
-  @Column
-  @Field()
-  email: string;
-
-  @Column
-  @Field()
-  avatar: string;
-
-  @Field({ nullable: true })
-  token: string;
+  title: string;
 
   @AllowNull(true)
-  @Column
-  password: string;
+  @Column(DataType.TEXT)
+  @Field()
+  review: string;
 
-  @ForeignKey(() => Role)
+  @ForeignKey(() => User)
   @AllowNull(false)
   @Column({ type: DataType.UUID, onDelete: "CASCADE" })
-  roleId: string;
+  userId: string;
 
-  @BelongsTo(() => Role)
-  role: Role;
+  @BelongsTo(() => User)
+  user: User;
+
+  @ForeignKey(() => Book)
+  @AllowNull(false)
+  @Column({ type: DataType.UUID, onDelete: "CASCADE" })
+  bookId: string;
+
+  @BelongsTo(() => Book)
+  book: Book;
 
   @CreatedAt
   @Column({ type: DataType.DATE })
