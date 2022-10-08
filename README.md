@@ -1,6 +1,15 @@
-# Book Reviews System 
-book reviews system where admins can add books under different genres and users can rate and review them (work in progress)
-## Stack Used: 
+# Book Reviews System
+
+## Description
+
+An api where:
+
+Admins can add authors and their books which can belong to multiple different genres.
+
+Users can view books information and add reviews.
+
+## Stack Used:
+
 - NodeJs
 - Express.js
 - TypeScript
@@ -8,5 +17,9 @@ book reviews system where admins can add books under different genres and users 
 - PostgreSQL
 - sequelize ORM
 
+## Database Diagram:
 
-[Database Diagram](https://dbdiagram.io/d/6325b2a00911f91ba5d1655b)
+- [link](https://dbdiagram.io/d/6325b2a00911f91ba5d1655b)
+- Image:
+
+![](https://github.com/MaryamMosad/book-reviews-api/blob/master/db-diagram.png?raw=true)

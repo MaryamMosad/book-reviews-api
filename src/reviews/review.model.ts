@@ -51,6 +51,11 @@ export class Review extends Model<Review> {
   @BelongsTo(() => Book)
   book: Book;
 
+  @AllowNull(false)
+  @Column(DataType.SMALLINT)
+  @Field(() => Int)
+  rating: number;
+
   @CreatedAt
   @Column({ type: DataType.DATE })
   createdAt: Date;
