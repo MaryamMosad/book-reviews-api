@@ -8,7 +8,11 @@ export class GenreService {
     return await Genre.findAll();
   }
   async createGenre(input: CreateGenreInput) {
-    return await Genre.create(input);
+    try {
+      return await Genre.create(input);
+    } catch (error) {
+      throw new BaseException(606);
+    }
   }
 
   async getValidGenreOrError(genreId: string) {

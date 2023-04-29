@@ -3,6 +3,7 @@ import { Genre } from "./genre.model";
 import { GenreService } from "./genre.service";
 import { CreateGenreInput } from "./inputs/create-genre.input";
 import { UpdateGenreInput } from "./inputs/update-genre.input";
+import { RolesPermissions } from "../roles/role-permissions";
 
 @Resolver(Genre)
 export class GenreResolver {
@@ -15,12 +16,13 @@ export class GenreResolver {
     return await this.genreService.genres();
   }
 
-  @Authorized()
+  @Authorized(RolesPermissions.CREATE_GENRES)
   @Mutation((returns) => Genre)
   async createGenre(@Args() input: CreateGenreInput) {
     return await this.genreService.createGenre(input);
   }
-  @Authorized()
+
+  @Authorized(RolesPermissions.UPDATE_GENRES)
   @Mutation((returns) => Genre)
   async updateGenre(@Args() input: UpdateGenreInput) {
     return await this.genreService.updateGenre(input);

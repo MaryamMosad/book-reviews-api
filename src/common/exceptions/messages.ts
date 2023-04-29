@@ -5,4 +5,5 @@ export const messageCodes = {
   603: "Invalid email or password",
   604: "User not found",
   605: "Genre not found",
+  606: "Genre Creation Failed",
 };

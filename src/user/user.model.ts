@@ -46,8 +46,8 @@ export class User extends Model<User> {
   password: string;
 
   @ForeignKey(() => Role)
-  @AllowNull(false)
-  @Column({ type: DataType.UUID, onDelete: "CASCADE" })
+  @AllowNull(true)
+  @Column({ type: DataType.UUID, onDelete: "SET NULL" })
   roleId: string;
 
   @BelongsTo(() => Role)

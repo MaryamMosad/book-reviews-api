@@ -16,5 +16,9 @@ export async function dbConnection() {
   await sequelize
     .sync({ force: false })
     .then(() => logger.info("DATABASE CONNECTED SUCCESSFULLY"))
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      logger.error(
+        `An Error Ocurred while connecting to the database\n ===> ${err}`
+      )
+    );
 }
