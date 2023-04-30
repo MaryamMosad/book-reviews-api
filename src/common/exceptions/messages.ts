@@ -6,4 +6,5 @@ export const messageCodes = {
   604: "User not found",
   605: "Genre not found",
   606: "Genre Creation Failed",
+  607: "Role not found",
 };

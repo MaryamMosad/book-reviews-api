@@ -4,12 +4,11 @@ import { GenreService } from "./genre.service";
 import { CreateGenreInput } from "./inputs/create-genre.input";
 import { UpdateGenreInput } from "./inputs/update-genre.input";
 import { RolesPermissions } from "../roles/role-permissions";
+import { genreServiceObj } from "../common/constants/services";
 
 @Resolver(Genre)
 export class GenreResolver {
-  constructor(
-    private readonly genreService: GenreService = new GenreService()
-  ) {}
+  constructor(private readonly genreService: GenreService = genreServiceObj) {}
 
   @Query((returns) => [Genre])
   async genres() {

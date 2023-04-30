@@ -4,11 +4,12 @@ import { BaseException } from "../common/exceptions/errors";
 import { User } from "../user/user.model";
 import { SignInInput } from "./Inputs/sign-in.input";
 import { sign, verify } from "jsonwebtoken";
+import { userServiceObj } from "../common/constants/services";
 import { UserService } from "../user/user.service";
 import { Role } from "../roles/role.model";
 
 export class AuthService {
-  constructor(private readonly userService: UserService = new UserService()) {}
+  constructor(private readonly userService: UserService = userServiceObj) {}
   async signUp(input: SignUpInput) {
     try {
       await this.userService.checkIfUserExists(input.email);

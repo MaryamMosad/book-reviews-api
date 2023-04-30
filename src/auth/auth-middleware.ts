@@ -1,8 +1,5 @@
-import { log } from "console";
 import { BaseException } from "../common/exceptions/errors";
-import { AuthService } from "./auth.service";
-
-let authService = new AuthService();
+import { authServiceObj as authService } from "../common/constants/services";
 
 export async function getUserFromRequestHeaders(req) {
   const token = req.headers["authorization"];
